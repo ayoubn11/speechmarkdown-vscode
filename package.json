@@ -37,7 +37,8 @@
     "onLanguage:javascript",
     "onLanguage:typescript",
     "onLanguage:yaml",
-    "onLanguage:markdown"
+    "onLanguage:markdown",
+    "onLanguage:plaintext" 
   ],
   "main": "./dist/extension",
   "contributes": {
@@ -185,7 +186,9 @@
         ],
         "extensions": [
           ".smd",
-          ".speechmarkdown"
+          ".speechmarkdown",
+          ".txt",
+          ".md"
         ],
         "configuration": "./language-configuration.json"
       }
