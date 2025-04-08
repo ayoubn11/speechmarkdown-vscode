@@ -3,10 +3,58 @@ import * as vscode from "vscode";
 import { JSHoverProvider } from "./hoverProvider";
 import { SMLTextWriter } from "./smdOutputProvider";
 import { SSMLAudioPlayer } from "./ssmlAudioPlayer";
+import axios from "axios";
+
 
 let jsCentralProvider = new JSHoverProvider();
 
 export function activate(context: vscode.ExtensionContext) {
+
+  context.subscriptions.push(
+    vscode.commands.registerCommand("extension.speechmarkdownspeakasterics", async () => {
+      const editor = vscode.window.activeTextEditor;
+      if (!editor) {
+        vscode.window.showErrorMessage("No active editor.");
+        return;
+      }
+  
+      const text = editor.document.getText(editor.selection).trim();
+      if (!text) {
+        vscode.window.showErrorMessage("No text selected.");
+        return;
+      }
+  
+      try {
+        const { data } = await axios.get<{ voices: any[] }>("http://127.0.0.1:5555/api/voices");
+        const voices = data.voices;
+  
+        if (!voices?.length) {
+          vscode.window.showErrorMessage("No voices available from Asterics.");
+          return;
+        }
+  
+        const pick = await vscode.window.showQuickPick(
+          voices.map((v) => ({
+            label: v.name,
+            description: `${v.id} (${v.providerId})`,
+            voiceId: v.id,
+            providerId: v.providerId,
+          })),
+          { placeHolder: "Choose a voice for Asterics" }
+        );
+  
+        if (!pick) return;
+  
+        const url = `http://127.0.0.1:5555/api/speak/${encodeURIComponent(text)}/${pick.providerId}/${pick.voiceId}`;
+        await axios.get(url);
+  
+        vscode.window.showInformationMessage(`🗣️ Sent to Asterics: ${pick.label}`);
+      } catch (err) {
+        vscode.window.showErrorMessage(`Asterics speak failed: ${err}`);
+      }
+    })
+  );
+  
 
   try
   {
