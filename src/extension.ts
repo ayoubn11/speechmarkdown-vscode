@@ -5,7 +5,6 @@ import { SMLTextWriter } from "./smdOutputProvider";
 import { SSMLAudioPlayer } from "./ssmlAudioPlayer";
 import axios from "axios";
 
-
 let jsCentralProvider = new JSHoverProvider();
 
 export function activate(context: vscode.ExtensionContext) {
@@ -17,47 +16,53 @@ export function activate(context: vscode.ExtensionContext) {
         vscode.window.showErrorMessage("No active editor.");
         return;
       }
-  
-      const text = editor.document.getText(editor.selection).trim();
+
+      let text = editor.document.getText(editor.selection).trim();
       if (!text) {
-        vscode.window.showErrorMessage("No text selected.");
+        text = editor.document.getText(); // speak entire document
+      }
+      if (!text) {
+        vscode.window.showErrorMessage("No text available.");
         return;
       }
-  
+
       try {
-        const { data } = await axios.get<{ voices: any[] }>("http://127.0.0.1:5555/api/voices");
-        const voices = data.voices;
-  
-        if (!voices?.length) {
-          vscode.window.showErrorMessage("No voices available from Asterics.");
+        let astericsVoice = <string>vscode.workspace.getConfiguration().get("speechmarkdown.astericsVoice");
+        if (!astericsVoice) {
+          const { data } = await axios.get<{ voices: any[] }>("http://127.0.0.1:5555/api/voices");
+          if (!data.voices?.length) {
+            vscode.window.showErrorMessage("No voices available from Asterics.");
+            return;
+          }
+          const pick = await vscode.window.showQuickPick(
+            data.voices.map((v) => ({
+              label: v.name,
+              description: `${v.id} (${v.providerId})`,
+              voiceId: v.id,
+              providerId: v.providerId,
+            })),
+            { placeHolder: "Choose a voice for Asterics" }
+          );
+          if (!pick) return;
+          astericsVoice = pick.providerId + "/" + pick.voiceId;
+          await vscode.workspace.getConfiguration().update("speechmarkdown.astericsVoice", astericsVoice, true);
+        }
+
+        const [providerId, voiceId] = astericsVoice.split("/");
+        if (!providerId || !voiceId) {
+          vscode.window.showErrorMessage("Invalid Asterics voice setting.");
           return;
         }
-  
-        const pick = await vscode.window.showQuickPick(
-          voices.map((v) => ({
-            label: v.name,
-            description: `${v.id} (${v.providerId})`,
-            voiceId: v.id,
-            providerId: v.providerId,
-          })),
-          { placeHolder: "Choose a voice for Asterics" }
-        );
-  
-        if (!pick) return;
-  
-        const url = `http://127.0.0.1:5555/api/speak/${encodeURIComponent(text)}/${pick.providerId}/${pick.voiceId}`;
+        const url = `http://127.0.0.1:5555/api/speak/${encodeURIComponent(text)}/${providerId}/${voiceId}`;
         await axios.get(url);
-  
-        vscode.window.showInformationMessage(`🗣️ Sent to Asterics: ${pick.label}`);
+        vscode.window.showInformationMessage("Asterics speech request sent.");
       } catch (err) {
         vscode.window.showErrorMessage(`Asterics speak failed: ${err}`);
       }
     })
   );
-  
 
-  try
-  {
+  try {
     context.subscriptions.push(
       vscode.commands.registerCommand('extension.speechmarkdownpreview', () => {
         const editor = vscode.window.activeTextEditor;
@@ -78,27 +83,47 @@ export function activate(context: vscode.ExtensionContext) {
     );
 
     context.subscriptions.push(
-      vscode.commands.registerCommand('extension.speechmarkdownspeakpolly', () => {
+      vscode.commands.registerCommand('extension.speechmarkdownspeakpolly', async () => {
         const editor = vscode.window.activeTextEditor;
-
-        if (editor) {
-          
-            let selection : string = editor.document.getText(editor.selection);
-            
-            SSMLAudioPlayer.getSSMLSpeechAsync(selection, Engine.STANDARD);
+        if (!editor) {
+          vscode.window.showErrorMessage("No active editor.");
+          return;
+        }
+        let text = editor.document.getText(editor.selection).trim();
+        if (!text) {
+          text = editor.document.getText();
+        }
+        if (!text) {
+          vscode.window.showErrorMessage("No text available.");
+          return;
+        }
+        try {
+          SSMLAudioPlayer.getSSMLSpeechAsync(text, Engine.STANDARD);
+        } catch (err) {
+          vscode.window.showErrorMessage(`Polly speak failed: ${err}`);
         }
       })
     );
 
     context.subscriptions.push(
-      vscode.commands.registerCommand('extension.speechmarkdownspeakpollyneural', () => {
+      vscode.commands.registerCommand('extension.speechmarkdownspeakpollyneural', async () => {
         const editor = vscode.window.activeTextEditor;
-
-        if (editor) {
-          
-            let selection : string = editor.document.getText(editor.selection);
-            
-            SSMLAudioPlayer.getSSMLSpeechAsync(selection, Engine.NEURAL);
+        if (!editor) {
+          vscode.window.showErrorMessage("No active editor.");
+          return;
+        }
+        let text = editor.document.getText(editor.selection).trim();
+        if (!text) {
+          text = editor.document.getText();
+        }
+        if (!text) {
+          vscode.window.showErrorMessage("No text available.");
+          return;
+        }
+        try {
+          SSMLAudioPlayer.getSSMLSpeechAsync(text, Engine.NEURAL);
+        } catch (err) {
+          vscode.window.showErrorMessage(`Polly speak failed: ${err}`);
         }
       })
     );

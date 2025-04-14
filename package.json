@@ -131,6 +131,11 @@
           "type": "string",
           "default": "Kendra",
           "markdownDescription": "Default voice to use for Polly. A full list of voices is available [here](https://docs.aws.amazon.com/polly/latest/dg/voicelist.html)."
+        },
+        "speechmarkdown.astericsVoice": {
+          "type": "string",
+          "default": "",
+          "description": "If set (format: providerId/voiceId), uses that for Asterics. If empty, a voice selection is shown."
         }
       }
     },
@@ -142,26 +147,24 @@
       }
     ],
     "commands": [
-
       {
         "command": "extension.speechmarkdownspeakasterics",
         "title": "Speak with Asterics Grid Helper",
         "category": "Speech Markdown"
       },
-      
       {
         "command": "extension.speechmarkdownpreview",
-        "title": "Speech Markdown to SSML",
+        "title": "Convert to SSML",
         "category": "Speech Markdown"
       },
       {
         "command": "extension.speechmarkdownspeakpolly",
-        "title": "Speak Selected SSML (Amazon Polly)",
+        "title": "Speak with Amazon Polly",
         "category": "Speech Markdown"
       },
       {
         "command": "extension.speechmarkdownspeakpollyneural",
-        "title": "Speak Selected SSML (Amazon Neural)",
+        "title": "Speak with Amazon Polly (Neural)",
         "category": "Speech Markdown"
       }
     ],
@@ -179,6 +182,11 @@
         },
         {
           "command": "extension.speechmarkdownspeakpollyneural",
+          "group": "speechmarkdown@1",
+          "when": "editorHasSelection"
+        },
+        {
+          "command": "extension.speechmarkdownspeakasterics",
           "group": "speechmarkdown@1",
           "when": "editorHasSelection"
         }
