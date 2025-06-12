@@ -8,6 +8,7 @@ This extension supports snippets, hover-over, and syntax highlighting of Speech 
 
 - [Speech Markdown Preview](#speech-markdown-preview)
 - [Speech Markdown Playback](#speech-markdown-playback)
+- [Change TTS Provider Quickly](#change-tts-provider-quickly)
 - [IntelliSense](#intellisense)
 - [Syntax Highlighting](#syntax-highlighting)
 - [Hover Over](#hover-over)
@@ -48,6 +49,10 @@ Play SSML generated from Speech Markdown. Highlight and select Speech Markdown i
 This will invoke the Amazon Polly API and play the generated MP3 file from your system's default MP3 player. In order to authenticate, you need an AWS account and your credentials:
 
 <img src="https://raw.githubusercontent.com/speechmarkdown/speechmarkdown-vscode/master/images/awsconfig.png" width="75%" alt="AWS Configuration"/>
+
+### Change TTS Provider Quickly
+
+Use the status bar gear icon to pick a Text-to-Speech provider without opening Settings.
 
 ### IntelliSense
 

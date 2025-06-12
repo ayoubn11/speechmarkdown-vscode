@@ -219,6 +219,11 @@
         "title": "Speak Selected SSML (Amazon Neural)",
         "category": "Speech Markdown"
       }
+      ,{
+        "command": "speechmarkdown.selectTTSProvider",
+        "title": "Select TTS Provider",
+        "category": "Speech Markdown"
+      }
     ],
     "menus": {
       "editor/context": [
