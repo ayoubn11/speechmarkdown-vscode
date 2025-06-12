@@ -1,4 +1,8 @@
-import { Engine } from "@aws-sdk/client-polly";
+import {
+  Engine,
+  PollyClient,
+  DescribeVoicesCommand
+} from "@aws-sdk/client-polly";
 import * as vscode from "vscode";
 import { JSHoverProvider } from "./hoverProvider";
 import { SMLTextWriter } from "./smdOutputProvider";
@@ -15,7 +19,8 @@ import {
 import * as fs from "fs";
 import * as os from "os";
 import * as path from "path";
-import sound from "sound-play"; 
+import * as https from "https";
+import sound from "sound-play";
 interface BaseTTSClient {
   synthToBytes(textOrSSML: string, options?: { format?: string }): Promise<Uint8Array>;
   checkCredentialsDetailed(): Promise<{ success: boolean; error?: string }>;
@@ -67,6 +72,12 @@ export function activate(context: vscode.ExtensionContext) {
     })
   );
 
+  context.subscriptions.push(
+    vscode.commands.registerCommand("speechmarkdown.selectVoice", async () => {
+      await selectVoice();
+    })
+  );
+
   ["typescript", "javascript", "json", "yaml"].forEach(lang => {
     context.subscriptions.push(vscode.languages.registerHoverProvider(lang, jsCentralProvider));
     context.subscriptions.push(vscode.languages.registerCompletionItemProvider(lang, jsCentralProvider));
@@ -85,6 +96,35 @@ context.subscriptions.push(speakBtn);
     const d = new Date();
     const pad = (n: number) => n.toString().padStart(2, "0");
     return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}_${pad(d.getHours())}-${pad(d.getMinutes())}-${pad(d.getSeconds())}`;
+  }
+
+  async function selectVoice() {
+    const config = vscode.workspace.getConfiguration("speechmarkdown");
+    const provider = config.get<string>("ttsProvider") || "Amazon Polly";
+    const voices = await fetchVoices(provider, config);
+    if (!voices || voices.length === 0) {
+      vscode.window.showErrorMessage(`No voices found for ${provider}`);
+      return;
+    }
+    const pick = await vscode.window.showQuickPick(
+      voices.map(v => (typeof v === "string" ? { label: v, id: v } : { label: v.name, id: v.id })),
+      { placeHolder: `Select ${provider} voice` }
+    );
+    if (!pick) return;
+    switch (provider) {
+      case "Amazon Polly":
+        await config.update("aws.pollyDefaultVoice", pick.id, true);
+        break;
+      case "ElevenLabs":
+        await config.update("elevenLabs.voiceId", pick.id, true);
+        break;
+      case "OpenAI":
+        await config.update("openai.voice", pick.id, true);
+        break;
+      case "Azure":
+        await config.update("azure.voice", pick.id, true);
+        break;
+    }
   }
 
   async function speakWithTTS(text: string) {
@@ -120,6 +160,62 @@ context.subscriptions.push(speakBtn);
       vscode.window.showErrorMessage(`TTS/Playback Error: ${err.message}`);
       console.error(err);
     }
+  }
+
+  async function fetchVoices(provider: string, config: vscode.WorkspaceConfiguration): Promise<{id: string, name: string}[] | string[]> {
+    try {
+      switch (provider) {
+        case "Amazon Polly": {
+          const ak = config.get<string>("aws.accessKeyId");
+          const sk = config.get<string>("aws.secretAccessKey");
+          const region = config.get<string>("aws.region") || "us-east-1";
+          if (!ak || !sk) return [];
+          const client = new PollyClient({ region, credentials: { accessKeyId: ak, secretAccessKey: sk } });
+          const res = await client.send(new DescribeVoicesCommand({}));
+          return (res.Voices || []).map(v => ({ id: v.Id!, name: v.Name! }));
+        }
+        case "OpenAI": {
+          return ["alloy", "echo", "fable", "onyx", "nova", "shimmer"];
+        }
+        case "ElevenLabs": {
+          const apiKey = config.get<string>("elevenLabs.apiKey");
+          if (!apiKey) return [];
+          const data = await httpGetJSON<{voices: {voice_id: string; name: string}[]}>("https://api.elevenlabs.io/v1/voices", { "xi-api-key": apiKey });
+          return data.voices.map(v => ({ id: v.voice_id, name: v.name }));
+        }
+        case "Azure": {
+          const key = config.get<string>("azure.subscriptionKey");
+          const region = config.get<string>("azure.region") || "eastus";
+          if (!key) return [];
+          const url = `https://${region}.tts.speech.microsoft.com/cognitiveservices/voices/list`;
+          const list = await httpGetJSON<{Name: string; ShortName: string}[]>(url, { "Ocp-Apim-Subscription-Key": key });
+          return list.map(v => ({ id: v.ShortName, name: v.Name }));
+        }
+        default:
+          return [];
+      }
+    } catch {
+      return [];
+    }
+  }
+
+  function httpGetJSON<T>(url: string, headers: Record<string, string>): Promise<T> {
+    return new Promise((resolve, reject) => {
+      const req = https.request(url, { headers }, res => {
+        const chunks: Buffer[] = [];
+        res.on("data", c => chunks.push(c));
+        res.on("end", () => {
+          try {
+            const body = Buffer.concat(chunks).toString();
+            resolve(JSON.parse(body));
+          } catch (err) {
+            reject(err);
+          }
+        });
+      });
+      req.on("error", reject);
+      req.end();
+    });
   }
 
   async function getTTSClient(provider: string, config: vscode.WorkspaceConfiguration): Promise<BaseTTSClient | null> {

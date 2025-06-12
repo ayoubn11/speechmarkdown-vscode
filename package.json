@@ -157,7 +157,8 @@
             "ElevenLabs",
             "OpenAI",
             "Azure",
-            "SherpaOnnx"
+            "SherpaOnnx",
+            "Google"
           ],
           "default": "Amazon Polly",
           "description": "TTS Provider for speech playback"
@@ -184,6 +185,11 @@
           "type": "string",
           "default": "eastus",
           "description": "Azure region for TTS (e.g., eastus, westus, westeurope)"
+        },
+        "speechmarkdown.azure.voice": {
+          "type": "string",
+          "default": "en-US-AriaNeural",
+          "description": "Default Azure voice name"
         }
       }
     },
@@ -217,6 +223,11 @@
       {
         "command": "extension.speechmarkdownspeakpollyneural",
         "title": "Speak Selected SSML (Amazon Neural)",
+        "category": "Speech Markdown"
+      },
+      {
+        "command": "speechmarkdown.selectVoice",
+        "title": "Select Voice",
         "category": "Speech Markdown"
       }
     ],
