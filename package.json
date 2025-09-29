@@ -34,11 +34,7 @@
     "speech markdown"
   ],
   "activationEvents": [
-    "onLanguage:json",
-    "onLanguage:javascript",
-    "onLanguage:typescript",
-    "onLanguage:yaml",
-    "onLanguage:markdown"
+    "onStartupFinished"
   ],
   "main": "./dist/extension",
   "contributes": {
