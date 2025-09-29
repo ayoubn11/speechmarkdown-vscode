@@ -8,6 +8,36 @@ import * as fs from "fs";
 import * as os from "os";
 import * as path from "path";
 
+/**
+ * Resolves a path that may contain ~ (Unix home) or %USERPROFILE% (Windows) variables
+ * @param inputPath The path to resolve
+ * @returns The resolved absolute path
+ */
+function resolvePath(inputPath: string): string {
+  if (!inputPath) return inputPath;
+  
+  let resolvedPath = inputPath.trim();
+  
+  // Handle ~ for Unix-style home directory
+  if (resolvedPath.startsWith('~/') || resolvedPath === '~') {
+    resolvedPath = path.join(os.homedir(), resolvedPath.slice(2));
+  }
+  
+  // Handle Windows environment variables like %USERPROFILE%
+  if (process.platform === 'win32') {
+    resolvedPath = resolvedPath.replace(/%([^%]+)%/g, (match, envVar) => {
+      return process.env[envVar] || match;
+    });
+  }
+  
+  // Handle Unix-style environment variables like $HOME
+  resolvedPath = resolvedPath.replace(/\$([A-Za-z_][A-Za-z0-9_]*)/g, (match, envVar) => {
+    return process.env[envVar] || match;
+  });
+  
+  return path.resolve(resolvedPath);
+}
+
 
 const providers = [
   { label: "Amazon Polly (online, SSML)", value: "polly" },
@@ -67,6 +97,7 @@ function getVoiceLabel() {
   return voiceLabel;
 }
 
+const tts_out_dir = "tts-output";
 export function activate(context: vscode.ExtensionContext) {
   const jsCentralProvider = new JSHoverProvider();
 
@@ -202,12 +233,22 @@ export function activate(context: vscode.ExtensionContext) {
 
     try {
       const editor = vscode.window.activeTextEditor;
+
+      //basename and directory of the current file or defaults
       const baseName = editor && editor.document.uri.fsPath
         ? path.basename(editor.document.uri.fsPath, path.extname(editor.document.uri.fsPath))
         : "untitled";
+      const baseDirectory = editor && editor.document.uri.fsPath
+        ? path.dirname(editor.document.uri.fsPath).trim()
+        : os.homedir();
+      
+      const configOutDir = config.get<string>("outputDir")?.trim();
+      const resolvedConfigOutDir = configOutDir ? resolvePath(configOutDir) : null;
+      console.log(`Document directory: ${baseDirectory}`, `document base name: ${baseName}`, `config output dir: ${configOutDir}`, `resolved config dir: ${resolvedConfigOutDir}`);
+
       const fileName = `${providerId.replace(/\s+/g, "")}_${baseName}_${getTimestamp()}.mp3`;
-      const outDir = config.get<string>("outputDir")?.trim()
-        || path.join(os.homedir(), "tts-output");
+      const outDir = path.resolve(resolvedConfigOutDir || baseDirectory, tts_out_dir);
+
       fs.mkdirSync(outDir, { recursive: true });
       const fullPath = path.join(outDir, fileName);
       await client.synthToFile(text, fullPath, "mp3", { useSpeechMarkdown: true });
