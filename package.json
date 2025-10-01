@@ -206,7 +206,7 @@
       },
       {
         "command": "speechmarkdown.speakText",
-        "key": "f13"
+        "key": "f9"
       },
       {
         "command": "speechmarkdown.selectTTSProvider",
@@ -214,7 +214,7 @@
       },
       {
         "command": "speechmarkdown.selectTTSProvider",
-        "key": "f14"
+        "key": "f10"
       },
       {
         "command": "speechmarkdown.listVoices",
@@ -222,7 +222,7 @@
       },
       {
         "command": "speechmarkdown.listVoices",
-        "key": "f15"
+        "key": "f12"
       }
     ],
     "commands": [
