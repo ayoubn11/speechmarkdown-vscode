@@ -103,4 +103,5 @@ dist
 # TernJS port file
 .tern-port
 out/**
+tts-output/
 speechmarkdown-vscode-*.vsix
