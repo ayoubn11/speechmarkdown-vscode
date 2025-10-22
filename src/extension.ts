@@ -135,13 +135,13 @@ export function activate(context: vscode.ExtensionContext) {
   const speakBtn = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 100);
   speakBtn.text = '$(unmute) Speak Text';
   speakBtn.command = "speechmarkdown.speakText";
-  speakBtn.tooltip = "Speak selected text or entire document (Ctrl+Alt+S or F13)";
+  speakBtn.tooltip = "Speak selected text or entire document (Ctrl+Alt+S or F8)";
   speakBtn.show();
   context.subscriptions.push(speakBtn);
 
   const providerBtn = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 99);
   providerBtn.command = "speechmarkdown.selectTTSProvider";
-  providerBtn.tooltip = "Select TTS Provider (Ctrl+Alt+P  or F14)";
+  providerBtn.tooltip = "Select TTS Provider (Ctrl+Alt+P  or F9)";
   
   function updateProviderButton() {
     providerBtn.text = `$(gear) ${getProviderLabel()}`;
@@ -152,7 +152,7 @@ export function activate(context: vscode.ExtensionContext) {
   const listVoicesBtn = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 98);
   listVoicesBtn.text = '$(megaphone) List Voices';
   listVoicesBtn.command = "speechmarkdown.listVoices";
-  listVoicesBtn.tooltip = "List and select available voices (Ctrl+Alt+L or F15)";
+  listVoicesBtn.tooltip = "List and select available voices (Ctrl+Alt+L or F10)";
 
   function updateVoiceButton() {
     //console.log(`Current TTS Provider: ${provider}, Voice: ${voice}`);
