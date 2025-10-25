@@ -115,14 +115,16 @@ export function activate(context: vscode.ExtensionContext) {
   );
 
   context.subscriptions.push(
-    vscode.commands.registerCommand("extension.speechmarkdownpreview", () => {
+    vscode.commands.registerCommand("extension.speechmarkdown2SSML", () => {
       const editor = vscode.window.activeTextEditor;
       if (!editor) return;
-      const sel = editor.document.getText(editor.selection);
       try {
-        SMLTextWriter.displaySSMLText(sel);
+        const parsedPath = path.parse(editor.document.uri.fsPath);
+        const ssmlFileName = path.join(parsedPath.dir, parsedPath.base + ".ssml");
+        SMLTextWriter.writeSSMLToFile(editor.document.getText(), ssmlFileName, "microsoft-azure");
       } catch (ex) {
         console.error(ex);
+        vscode.window.showErrorMessage("Failed to write SSML file: " + (String(ex)));
       }
     })
   );
@@ -131,6 +133,13 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(vscode.languages.registerHoverProvider(lang, jsCentralProvider));
     context.subscriptions.push(vscode.languages.registerCompletionItemProvider(lang, jsCentralProvider));
   });
+
+  const ssmlBtn = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 101);
+  ssmlBtn.text = '$(file-sound) SSML Conversion';
+  ssmlBtn.command = "extension.speechmarkdown2SSML";
+  ssmlBtn.tooltip = "Convert active text file to SSML (Ctrl+Alt+C or F7)";
+  ssmlBtn.show();
+  context.subscriptions.push(ssmlBtn);
 
   const speakBtn = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 100);
   speakBtn.text = '$(unmute) Speak Text';

@@ -201,6 +201,14 @@
     },
     "keybindings": [
       {
+        "command": "extension.speechmarkdown2SSML",
+        "key": "ctrl+alt+c"
+      },
+      {
+        "command": "extension.speechmarkdown2SSML",
+        "key": "f7"
+      },
+      {
         "command": "speechmarkdown.speakText",
         "key": "ctrl+alt+s"
       },
@@ -232,7 +240,7 @@
         "category": "Speech Markdown"
       },
       {
-        "command": "extension.speechmarkdownpreview",
+        "command": "extension.speechmarkdown2SSML",
         "title": "Convert Speech Markdown to SSML",
         "category": "Speech Markdown"
       },
@@ -245,9 +253,8 @@
     "menus": {
       "editor/context": [
         {
-          "command": "extension.speechmarkdownpreview",
-          "group": "speechmarkdown@1",
-          "when": "editorHasSelection"
+          "command": "extension.speechmarkdown2SSML",
+          "group": "speechmarkdown@1"
         }
       ]
     },
