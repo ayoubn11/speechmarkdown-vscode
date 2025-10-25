@@ -254,8 +254,7 @@
       "editor/context": [
         {
           "command": "extension.speechmarkdown2SSML",
-          "group": "speechmarkdown@1",
-          "when": "editorHasSelection"
+          "group": "speechmarkdown@1"
         }
       ]
     },
