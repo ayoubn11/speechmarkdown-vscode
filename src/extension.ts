@@ -124,6 +124,7 @@ export function activate(context: vscode.ExtensionContext) {
         SMLTextWriter.writeSSMLToFile(editor.document.getText(), ssmlFileName, "microsoft-azure");
       } catch (ex) {
         console.error(ex);
+        vscode.window.showErrorMessage("Failed to write SSML file: " + (ex && ex.message ? ex.message : String(ex)));
       }
     })
   );
