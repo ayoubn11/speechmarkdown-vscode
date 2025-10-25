@@ -119,7 +119,8 @@ export function activate(context: vscode.ExtensionContext) {
       const editor = vscode.window.activeTextEditor;
       if (!editor) return;
       try {
-        const ssmlFileName = editor.document.uri.fsPath + ".ssml";
+        const parsedPath = path.parse(editor.document.uri.fsPath);
+        const ssmlFileName = path.join(parsedPath.dir, parsedPath.base + ".ssml");
         SMLTextWriter.writeSSMLToFile(editor.document.getText(), ssmlFileName, "microsoft-azure");
       } catch (ex) {
         console.error(ex);
