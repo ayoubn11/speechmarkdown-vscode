@@ -10,7 +10,17 @@ export class SMLTextWriter {
 
 	public static writeSSMLToFile(smdText : string, filePath : string, platform: string | null) {
 		var speechOut = SMLTextWriter.GetSSML(smdText, platform);
-		fs.writeFileSync(filePath, speechOut, { encoding: 'utf8' });
+		try {
+			fs.writeFileSync(filePath, speechOut, { encoding: 'utf8' });
+		} catch (err) {
+			let msg = "Failed to write SSML to file '" + filePath + "'.";
+			if (err instanceof Error) {
+				msg += " " + err.name + ": " + err.message;
+			} else {
+				msg += " " + String(err);
+			}
+			throw new Error(msg);
+		}
 	}
 
 	public static displaySSMLText(smdText : string) {
