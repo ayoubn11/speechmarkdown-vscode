@@ -358,7 +358,6 @@
     "tar-stream": "latest",
     "text2wav": "^0.0.14",
     "tmp": "^0.2.3",
-    "utf-8-validate": "^5.0.10",
-    "node-audio": "0.0.10"
+    "utf-8-validate": "^5.0.10"
   }
 }
