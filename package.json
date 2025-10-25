@@ -3,24 +3,24 @@
   "name": "speechmarkdown-vscode",
   "displayName": "Speech Markdown",
   "publisher": "WhetstoneTechnologiesInc",
-  "description": "Language features for Speech Markdown",
+  "description": "Fork of Speech Markdown: TTS support for various providers",
   "icon": "images/smd-icon.png",
   "repository": {
     "type": "git",
-    "url": "https://github.com/speechmarkdown/speechmarkdown-vscode.git"
+    "url": "https://github.com/ayoubn11/speechmarkdown-vscode.git"
   },
   "galleryBanner": {
     "color": "#000000",
     "theme": "dark"
   },
   "license": "MIT",
-  "version": "0.0.15",
+  "version": "0.0.16",
   "preview": false,
   "author": {
-    "name": "johniwasz"
+    "name": "deinhofer"
   },
   "engines": {
-    "vscode": "^1.88.0"
+    "vscode": "^1.98.0"
   },
   "categories": [
     "Snippets",
@@ -292,7 +292,8 @@
     "webpack-dev": "webpack --mode development --watch",
     "test-compile": "tsc -p ./",
     "build-watch": "tsc --watch",
-    "build": "tsc"
+    "build": "tsc",
+    "package": "npx vsce package --no-dependencies"
   },
   "devDependencies": {
     "@types/mocha": "^10.0.10",
@@ -304,6 +305,7 @@
     "@typescript-eslint/parser": "^8.27.0",
     "@vscode/test-cli": "^0.0.10",
     "@vscode/test-electron": "^2.4.1",
+    "@vscode/vsce": "^3.6.2",
     "eslint": "^9.24.0",
     "ts-loader": "^9.5.2",
     "typescript": "^5.8.2",
