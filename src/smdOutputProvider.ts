@@ -1,5 +1,6 @@
 import * as vscode from "vscode";
 import { SpeechMarkdown } from "speechmarkdown-js";
+import * as fs from "fs";
 import { SpeechOptions } from "speechmarkdown-js/dist/src/SpeechOptions";
 
 const outChannel = vscode.window.createOutputChannel('Speech Markdown');
@@ -7,6 +8,10 @@ const speech = new SpeechMarkdown();
 
 export class SMLTextWriter {
 
+	public static writeSSMLToFile(smdText : string, filePath : string, platform: string | null) {
+		var speechOut = SMLTextWriter.GetSSML(smdText, platform);
+		fs.writeFileSync(filePath, speechOut, { encoding: 'utf8' });
+	}
 
 	public static displaySSMLText(smdText : string) {
 		  
