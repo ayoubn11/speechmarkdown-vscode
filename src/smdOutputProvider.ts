@@ -9,7 +9,7 @@ const speech = new SpeechMarkdown();
 export class SMLTextWriter {
 
 	public static writeSSMLToFile(smdText : string, filePath : string, platform: string | null) {
-		var speechOut = SMLTextWriter.GetSSML(smdText, platform);
+		const speechOut = SMLTextWriter.GetSSML(smdText, platform);
 		try {
 			fs.writeFileSync(filePath, speechOut, { encoding: 'utf8' });
 		} catch (err) {
