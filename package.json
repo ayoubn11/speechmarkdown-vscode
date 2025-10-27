@@ -351,7 +351,7 @@
     "decompress-tarbz2": "latest",
     "decompress-targz": "latest",
     "fs": "^0.0.1-security",
-    "js-tts-wrapper": "0.1.38",
+    "js-tts-wrapper": "^0.1.56",
     "latest": "^0.2.0",
     "mespeak": "^2.0.2",
     "microsoft-cognitiveservices-speech-sdk": "latest",
