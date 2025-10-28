@@ -14,7 +14,7 @@
     "theme": "dark"
   },
   "license": "MIT",
-  "version": "0.0.16",
+  "version": "0.0.17",
   "preview": false,
   "author": {
     "name": "deinhofer"
@@ -361,7 +361,7 @@
     "say": "latest",
     "sherpa-onnx-node": "latest",
     "sound-play": "^1.1.0",
-    "speechmarkdown-js": "^2.1.0",
+    "speechmarkdown-js": "^2.2.0",
     "tar-stream": "latest",
     "text2wav": "^0.0.14",
     "tmp": "^0.2.3",
