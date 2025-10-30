@@ -3,7 +3,7 @@
   "name": "speechmarkdown-vscode",
   "displayName": "Speech Markdown",
   "publisher": "WhetstoneTechnologiesInc",
-  "description": "Fork of Speech Markdown: TTS support for various providers",
+  "description": "Fork of Speech Markdown: TTS support for various providers using js-tts-wrapper library and adding many shortcuts",
   "icon": "images/smd-icon.png",
   "repository": {
     "type": "git",
