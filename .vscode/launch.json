@@ -13,10 +13,7 @@
             "outFiles": [
                 "${workspaceFolder}/dist/**/*.js"
             ],
-            "preLaunchTask": "npm: webpack",
-            "env": {
-                "SPEECHMARKDOWN_ENABLE": "true"
-            }
+            "preLaunchTask": "npm: webpack"
         },
         {
             "name": "Extension Tests",
