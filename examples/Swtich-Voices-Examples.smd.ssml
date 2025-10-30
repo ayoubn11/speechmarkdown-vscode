@@ -1,0 +1,14 @@
+Why do you keep switching voices <voice name="Brian">from one</voice> <voice name="Kendra">to the other</voice>?
+#[defaults] Now back to normal speech.
+#[voice:'device'] Now back to normal speech.
+#[dj] Welcome back to the Morning Zoo!
+<voice name="Nicole"><lang xml:lang="en-AU">Bob's gone walkabout</lang></voice>.
+<voice name="Conchita"><lang xml:lang="en-ES">Ser pan comido</lang></voice>.
+<voice name="Brian"><lang xml:lang="en-GB">Look on the bright side of life</lang></voice>.
+<voice name="Aditi"><lang xml:lang="en-IN">How are you?</lang></voice>
+<voice name="Salli"><lang xml:lang="en-US">I don't sound like Alexa.</lang></voice>.
+<voice name="Mathieu"><lang xml:lang="fr-FR">Ça marche!</lang></voice>.
+<voice name="Carla"><lang xml:lang="it-IT">In bocca al lupo</lang></voice>.
+<voice name="Mizuki"><lang xml:lang="ja-JP">海千山千</lang></voice>.
+#[newscaster] And now for today's top stories.
+I want to tell you a secret. I am not a real human..

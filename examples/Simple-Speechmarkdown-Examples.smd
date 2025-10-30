@@ -1,0 +1,5 @@
+There is a short pause [500ms], before I continue.
+I can make text ++important++ or use (very emphasised)[emphasis:'strong'] and (slightly emphasised)[emphasis:'reduced'].
+(I can speak text slow)[rate:'x-slow'] and (I can speak text fast)[rate:'x-fast'].
+(I can speak text high)[pitch:"high"] and (I can speak text low)[pitch:"low"].
+(I can speak text loud)[volume:"loud"] and (I can speak text soft)[volume:"soft"].

@@ -1,0 +1,14 @@
+Why do you keep switching voices (from one)[voice:"Brian"] (to the other)[voice:"Kendra"]?
+#[defaults] Now back to normal speech.
+#[voice:'device'] Now back to normal speech.
+#[dj] Welcome back to the Morning Zoo!
+(Bob's gone walkabout)[voice:'Nicole';lang:'en-AU'].
+(Ser pan comido)[voice:'Conchita';lang:'en-ES'].
+(Look on the bright side of life)[voice:'Brian';lang:'en-GB'].
+(How are you?)[voice:'Aditi';lang:'en-IN']
+(I don't sound like Alexa.)[voice:'Salli';lang:'en-US'].
+(Ça marche!)[voice:'Mathieu';lang:'fr-FR'].
+(In bocca al lupo)[voice:'Carla';lang:'it-IT'].
+(海千山千)[voice:'Mizuki';lang:'ja-JP'].
+#[newscaster] And now for today's top stories.
+I want to tell you a secret. (I am not a real human.)[whisper].
