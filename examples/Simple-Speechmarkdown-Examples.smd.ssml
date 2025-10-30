@@ -1,0 +1,5 @@
+There is a short pause <break time="500ms"/>, before I continue.
+I can make text important or use <emphasis level="strong">very emphasised</emphasis> and <emphasis level="reduced">slightly emphasised</emphasis>.
+<prosody rate="x-slow">I can speak text slow</prosody> and <prosody rate="x-fast">I can speak text fast</prosody>.
+<prosody pitch="high">I can speak text high</prosody> and <prosody pitch="low">I can speak text low</prosody>.
+<prosody volume="loud">I can speak text loud</prosody> and <prosody volume="soft">I can speak text soft</prosody>.
