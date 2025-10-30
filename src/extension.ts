@@ -1,6 +1,9 @@
 import * as vscode from "vscode";
 import { JSHoverProvider } from "./hoverProvider";
 import { SMLTextWriter } from "./smdOutputProvider";
+
+// Enable SpeechMarkdown features in js-tts-wrapper
+process.env.SPEECHMARKDOWN_ENABLE = 'true';
 import {
   createTTSClient
 } from "js-tts-wrapper";
@@ -121,7 +124,7 @@ export function activate(context: vscode.ExtensionContext) {
       try {
         const parsedPath = path.parse(editor.document.uri.fsPath);
         const ssmlFileName = path.join(parsedPath.dir, parsedPath.base + ".ssml");
-        SMLTextWriter.writeSSMLToFile(editor.document.getText(), ssmlFileName, "microsoft-azure");
+        SMLTextWriter.writeSSMLToFile(editor.document.getText(), ssmlFileName, "w3c");
       } catch (ex) {
         console.error(ex);
         vscode.window.showErrorMessage("Failed to write SSML file: " + (String(ex)));
