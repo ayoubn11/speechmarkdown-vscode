@@ -124,7 +124,7 @@ export function activate(context: vscode.ExtensionContext) {
       try {
         const parsedPath = path.parse(editor.document.uri.fsPath);
         const ssmlFileName = path.join(parsedPath.dir, parsedPath.base + ".ssml");
-        SMLTextWriter.writeSSMLToFile(editor.document.getText(), ssmlFileName, "w3c");
+        SMLTextWriter.writeSSMLToFile(editor.document.getText(), ssmlFileName, "microsoft-azure");
       } catch (ex) {
         console.error(ex);
         vscode.window.showErrorMessage("Failed to write SSML file: " + (String(ex)));
@@ -253,6 +253,12 @@ export function activate(context: vscode.ExtensionContext) {
       const baseDirectory = editor && editor.document.uri.fsPath
         ? path.dirname(editor.document.uri.fsPath).trim()
         : os.homedir();
+      // Determine the extension of the currently opened file (includes leading dot, e.g. ".ts")
+      const fileExtension = editor && editor.document.uri.fsPath
+        ? path.extname(editor.document.uri.fsPath).toLowerCase()
+        : "";
+      // Log extension so it's available for debugging and to avoid unused-variable errors
+      console.log(`Current file extension: ${fileExtension}`);
       
       const configOutDir = config.get<string>("outputDir")?.trim();
       const resolvedConfigOutDir = configOutDir ? resolvePath(configOutDir) : null;
@@ -261,9 +267,11 @@ export function activate(context: vscode.ExtensionContext) {
       const fileName = `${providerId.replace(/\s+/g, "")}_${baseName}_${getTimestamp()}.mp3`;
       const outDir = path.resolve(resolvedConfigOutDir || baseDirectory, tts_out_dir);
 
+      const synthOptions = fileExtension === ".ssml" ? { rawSSML: true } : { useSpeechMarkdown: true };
       fs.mkdirSync(outDir, { recursive: true });
       const fullPath = path.join(outDir, fileName);
-      await client.synthToFile(text, fullPath, "mp3", { useSpeechMarkdown: true });
+      console.log(`Saving TTS output to: ${fullPath}, synthOptions:`, synthOptions);
+      await client.synthToFile(text, fullPath, "mp3", synthOptions);
       vscode.window.showInformationMessage(`Saved audio: ${fullPath}`);
       await client.speak({filename : fullPath});
     } catch (err: any) {
