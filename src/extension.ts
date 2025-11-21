@@ -2,8 +2,6 @@ import * as vscode from "vscode";
 import { JSHoverProvider } from "./hoverProvider";
 import { SMLTextWriter } from "./smdOutputProvider";
 
-// Enable SpeechMarkdown features in js-tts-wrapper
-process.env.SPEECHMARKDOWN_ENABLE = 'true';
 import {
   createTTSClient
 } from "js-tts-wrapper";
