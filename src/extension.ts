@@ -2,6 +2,10 @@ import * as vscode from "vscode";
 import { JSHoverProvider } from "./hoverProvider";
 import { SMLTextWriter } from "./smdOutputProvider";
 
+// Enable SpeechMarkdown globally, although should be enabled by default already.
+import { SpeechMarkdown } from "js-tts-wrapper";
+SpeechMarkdown.configureSpeechMarkdown({ enabled: true });
+
 import {
   createTTSClient
 } from "js-tts-wrapper";
