@@ -310,7 +310,13 @@ export function activate(context: vscode.ExtensionContext) {
           vscode.window.showErrorMessage("Missing ElevenLabs API key.");
           return null;
         }
-        opts = { apiKey: elevenKey, voice: config.get<string>(`${providerId}.voice`) };
+        opts = { 
+          apiKey: elevenKey,
+          properties: {
+            model: config.get<string>(`${providerId}.model`)
+          }
+        };
+
         break;
 
       case "openai":

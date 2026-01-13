@@ -6,20 +6,33 @@ This extension supports snippets, hover-over, and syntax highlighting of Speech 
 
 ## Features
 
-- [Speech Markdown Preview](#speech-markdown-preview)
-- [Speech Markdown Playback](#speech-markdown-playback)
-- [IntelliSense](#intellisense)
-- [Syntax Highlighting](#syntax-highlighting)
-- [Hover Over](#hover-over)
-- [Snippets](#snippets)
-  - [Text Selection](#text-selection)
-  - [Insert Snippet](#insert-snippet)
-  - [Enable Intellisense in TypeScript and JavaScript](#enable-intellisense-in-typescript-and-javascript)
+- [Speech Markdown](#speech-markdown)
+  - [Features](#features)
+  - [Text-to-Speech (TTS) Features](#text-to-speech-tts-features)
+    - [Example Files](#example-files)
+    - [Speech Markdown Preview](#speech-markdown-preview)
+    - [Speech Markdown Playback](#speech-markdown-playback)
+    - [IntelliSense](#intellisense)
+    - [Syntax Highlighting](#syntax-highlighting)
+    - [Hover Over](#hover-over)
+    - [Snippets](#snippets)
+      - [Text Selection](#text-selection)
+      - [Insert Snippet](#insert-snippet)
+      - [Enable Intellisense in TypeScript and JavaScript](#enable-intellisense-in-typescript-and-javascript)
+  - [Commands \& Hotkeys](#commands--hotkeys)
+  - [Configuration](#configuration)
+    - [Provider Credentials \& Options](#provider-credentials--options)
+    - [Output](#output)
+    - [How to Configure Settings](#how-to-configure-settings)
+  - [Development \& Running](#development--running)
+    - [Build and Run the Extension Locally](#build-and-run-the-extension-locally)
+    - [Demo: Running the Extension](#demo-running-the-extension)
+  - [Accessibility](#accessibility)
 
 ## Text-to-Speech (TTS) Features
 
 - **Multi-Provider TTS Support:**
-  - Amazon Polly, ElevenLabs, OpenAI, Azure, SherpaOnnx, Google, PlayHT, IBM Watson, WitAI, SAPI (Windows), eSpeak NG, eSpeak NG WASM
+  - Amazon Polly, ElevenLabs (including audiotags e.g. ```[sarcastically]```, see [examples/elevenlabs_v3-model-audiotags.smd](examples/elevenlabs_v3-model-audiotags.smd)), OpenAI, Azure, SherpaOnnx, Google, PlayHT, IBM Watson, WitAI, SAPI (Windows), eSpeak NG, eSpeak NG WASM
 - **Voice Selection:**
   - List and select available voices for the chosen provider. Voice selection is saved per provider.
 - **Provider Selection:**
@@ -33,6 +46,10 @@ This extension supports snippets, hover-over, and syntax highlighting of Speech 
   - All major TTS features are accessible via keyboard shortcuts.
 
 ![TTS Provider & Voice Selection + Speak Demo](TTS_speakprovidergif.gif)
+
+### Example Files
+
+See the [examples](examples) folder for many examples of what you can do.
 
 ### Speech Markdown Preview
 
@@ -353,6 +370,7 @@ Set these in your VS Code settings (Settings UI or `settings.json`):
 | **Amazon Polly Voice**           | Default voice for Polly (e.g., Joanna, Matthew)    |
 | **ElevenLabs API Key**           | Your ElevenLabs API key                            |
 | **ElevenLabs Voice ID**          | Voice ID from your ElevenLabs account              |
+| **ElevenLabs Model**          | Select the model to use for synthesis, e.g. 'eleven_v3'              |
 | **OpenAI API Key**               | Your OpenAI API key for TTS                        |
 | **OpenAI Voice**                 | Voice for OpenAI TTS (e.g., alloy, echo, nova)     |
 | **OpenAI Model**                 | TTS model for OpenAI (e.g., gpt-4o-mini-tts)       |
