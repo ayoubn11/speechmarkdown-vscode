@@ -9,6 +9,7 @@ This extension supports snippets, hover-over, and syntax highlighting of Speech 
 - [Speech Markdown](#speech-markdown)
   - [Features](#features)
   - [Text-to-Speech (TTS) Features](#text-to-speech-tts-features)
+    - [Example Files](#example-files)
     - [Speech Markdown Preview](#speech-markdown-preview)
     - [Speech Markdown Playback](#speech-markdown-playback)
     - [IntelliSense](#intellisense)
@@ -31,7 +32,7 @@ This extension supports snippets, hover-over, and syntax highlighting of Speech 
 ## Text-to-Speech (TTS) Features
 
 - **Multi-Provider TTS Support:**
-  - Amazon Polly, ElevenLabs (including audiotags e.g. ```[sarcastically]```), OpenAI, Azure, SherpaOnnx, Google, PlayHT, IBM Watson, WitAI, SAPI (Windows), eSpeak NG, eSpeak NG WASM
+  - Amazon Polly, ElevenLabs (including audiotags e.g. ```[sarcastically]```, see [examples/elevenlabs_v3-model-audiotags.smd](examples/elevenlabs_v3-model-audiotags.smd)), OpenAI, Azure, SherpaOnnx, Google, PlayHT, IBM Watson, WitAI, SAPI (Windows), eSpeak NG, eSpeak NG WASM
 - **Voice Selection:**
   - List and select available voices for the chosen provider. Voice selection is saved per provider.
 - **Provider Selection:**
@@ -45,6 +46,10 @@ This extension supports snippets, hover-over, and syntax highlighting of Speech 
   - All major TTS features are accessible via keyboard shortcuts.
 
 ![TTS Provider & Voice Selection + Speak Demo](TTS_speakprovidergif.gif)
+
+### Example Files
+
+See the [examples](examples) folder for many examples of what you can do.
 
 ### Speech Markdown Preview
 
