@@ -28,7 +28,7 @@ This extension supports snippets, hover-over, and syntax highlighting of Speech 
     - [Build and Run the Extension Locally](#build-and-run-the-extension-locally)
     - [Demo: Running the Extension](#demo-running-the-extension)
     - [Running Commandline Tests](#running-commandline-tests)
-    - [Run tests](#run-tests)
+      - [Run tests](#run-tests)
   - [Accessibility](#accessibility)
 
 ## Text-to-Speech (TTS) Features
@@ -452,7 +452,7 @@ You can access the SpeechMarkdown extension settings in several ways:
 
 The folder ```test/src/``` contains several tests with different TTS providers using the same example text extracted from selected text files of the ```examples``` folder.
 
-### Run tests
+#### Run tests
 
 1. Configure your TTS providers (API keys, voiceId to be used,...) in the file ```.env``` of the root folder. Copy ```.env.example``` and modify it.
 **Don't add the file to the git repository to not expose any API keys!!**
