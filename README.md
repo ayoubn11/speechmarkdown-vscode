@@ -454,7 +454,7 @@ The folder ```test/src/``` contains several tests with different TTS providers u
 
 ### Run tests
 
-1. Configure your TTS providers (API keys, voiceId to be used,...) in the file ```.env``` of the root folder.
+1. Configure your TTS providers (API keys, voiceId to be used,...) in the file ```.env``` of the root folder. Copy ```.env.example``` and modify it.
 **Don't add the file to the git repository to not expose any API keys!!**
 1. Install the dependencies: ```npm install```
 2. Run a single test:
