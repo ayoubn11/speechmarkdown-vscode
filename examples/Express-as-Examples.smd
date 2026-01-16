@@ -1,6 +1,12 @@
 (Hello!)[excited]
 (This is very exciting!)[excited:"1.8"]
+
 #[excited]
 This entire section is excited!
 Multiple sentences work too.
-#[excited]
+
+#[defaults]
+Back to normal speech now.
+
+#[excited:'low']
+A low excitement level.
