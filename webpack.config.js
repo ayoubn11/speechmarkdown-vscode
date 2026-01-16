@@ -23,8 +23,11 @@ const config = {
   },
   resolve: {
     // support reading TypeScript and JavaScript files, 📖 -> https://github.com/TypeStrong/ts-loader
-	extensions: ['.ts', '.js']
-	
+    extensions: ['.ts', '.js'],
+    modules: [
+      path.resolve(__dirname, 'node_modules'),
+      path.resolve(__dirname, '../js-tts-wrapper-win/node_modules')
+    ]
   },
   module: {
     rules: [
